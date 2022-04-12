@@ -45,6 +45,16 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Base URL
+
+```bash
+# API 
+http://localhost:3000
+
+# Swager
+http://localhost:3000/api
+```
+
 ## Test
 
 ```bash
