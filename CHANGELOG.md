@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/adrihle/nest-rt/compare/v0.0.4...v0.0.5) (2022-04-18)
+
+
+### Features
+
+* **docker:** added db container instance ([30eb6d6](https://github.com/adrihle/nest-rt/commit/30eb6d6f047f719ab7ff078ce9643e2eb9ad2166))
+* **ORM:** added basic infrastructure ([22d70df](https://github.com/adrihle/nest-rt/commit/22d70df6b2cd93556bf6049e9952416c9f31a108))
+
 ### [0.0.4](https://github.com/adrihle/nest-rt/compare/v0.0.3...v0.0.4) (2022-04-18)
 
 
