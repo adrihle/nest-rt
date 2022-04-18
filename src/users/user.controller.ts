@@ -1,41 +1,33 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { UserDTO } from "./user.dto";
-
-const generateId = () => Math.floor(Math.random() * 1000);
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-    users: UserDTO[] = [];
+    constructor(private readonly service: UsersService) { }
 
     @Get()
     getUsers(): UserDTO[] {
-        return this.users;
+        return this.service.get();
     };
 
     @Get(':id')
     getUserById(@Param('id') id: string): UserDTO {
-        return this.users.find(u => u.id === id);
+        return this.service.getById(id);
     };
 
     @Post()
     createUser(@Body() user: UserDTO): UserDTO {
-        const newUser: UserDTO = {
-            ...user,
-            id: String(generateId())
-        };
-        this.users = [...this.users, newUser];
-        return newUser;
+        return this.service.create(user);
     };
 
     @Put(':id')
     updateUser(@Param('id') id: string, @Body() user: UserDTO): UserDTO {
-        this.users = this.users.filter(u => u.id !== id);
-        this.users = [...this.users, this.createUser(user)];
-        return user;
+        return this.service.update(id, user);
     };
 
     @Delete(':id')
     deleteUser(@Param() id: string) {
-        this.users = this.users.filter(u => u.id !== id);
+        return this.service.delete(id);
     }
 }

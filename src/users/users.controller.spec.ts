@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './user.controller';
 import * as request from 'supertest';
 import { UserDTO } from './user.dto';
+import { UsersService } from './users.service';
 
 const BASE_URL = '/users'
 
@@ -12,6 +13,7 @@ describe('User controller e2e', () => {
     beforeEach(async () => {
         const fixture: TestingModule = await Test.createTestingModule({
             controllers: [UsersController],
+            providers: [UsersService],
         }).compile();
 
         app = fixture.createNestApplication();
