@@ -28,7 +28,7 @@ export class UsersController {
     };
 
     @Put(':id')
-    updateUser(@Param(':id') id: string, @Body() user: UserDTO): UserDTO {
+    updateUser(@Param('id') id: string, @Body() user: UserDTO): UserDTO {
         this.users = this.users.filter(u => u.id !== id);
         this.users = [...this.users, this.createUser(user)];
         return user;
