@@ -7,27 +7,27 @@ export class UsersController {
     constructor(private readonly service: UsersService) { }
 
     @Get()
-    getUsers(): UserDTO[] {
+    async getUsers() {
         return this.service.get();
     };
 
     @Get(':id')
-    getUserById(@Param('id') id: string): UserDTO {
+    async getUserById(@Param('id') id: string) {
         return this.service.getById(id);
     };
 
     @Post()
-    createUser(@Body() user: UserDTO): UserDTO {
+    async createUser(@Body() user: UserDTO) {
         return this.service.create(user);
     };
 
     @Put(':id')
-    updateUser(@Param('id') id: string, @Body() user: UserDTO): UserDTO {
+    async updateUser(@Param('id') id: string, @Body() user: UserDTO) {
         return this.service.update(id, user);
     };
 
     @Delete(':id')
-    deleteUser(@Param() id: string) {
+    async deleteUser(@Param() id: string) {
         return this.service.delete(id);
     }
 }
