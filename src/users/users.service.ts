@@ -1,37 +1,38 @@
 import { Injectable } from "@nestjs/common";
 import { UserDTO } from "./user.dto";
+import { UserEntity } from "./users.entity";
+import { UserMapper } from "./users.mapper";
+import { UsersRepository } from "./users.repository";
 
 @Injectable()
 export class UsersService {
-    private users: UserDTO[] = [];
+    constructor(
+        private repository: UsersRepository,
+        private mapper: UserMapper
+    ) { }
 
-    private generateId = () => Math.floor(Math.random() * 1000);
-
-    public get(): UserDTO[] {
-        return this.users;
+    public async get(): Promise<UserDTO[]> {
+        const users: UserEntity[] = await this.repository.getAll();
+        return users.map(user => this.mapper.entityToDto(user));
     };
 
-    public getById(id: string): UserDTO {
-        return this.users.find(u => u.id === id);
+    public async getById(id: string): Promise<UserDTO> {
+        const user: UserEntity = await this.repository.getById(id);
+        return this.mapper.entityToDto(user);
     };
 
-    public create(user: UserDTO) {
-        const newUser: UserDTO = {
-            ...user,
-            id: String(this.generateId())
-        };
-        this.users = [...this.users, newUser];
-        return newUser;
+    public async create(user: UserDTO): Promise<UserDTO> {
+        const newUser: UserEntity = await this.repository.create(user);
+        return this.mapper.entityToDto(newUser);
     };
 
-    public update(id: string, user: UserDTO): UserDTO {
-        this.users = this.users.filter(u => u.id !== id);
-        this.users = [...this.users, this.create(user)];
-        return user;
+    public async update(id: string, user: UserDTO): Promise<UserDTO> {
+        const updatedUser = await this.repository.update(id, user);
+        return this.mapper.entityToDto(updatedUser);
     };
 
-    public delete(id: string) {
-        this.users = this.users.filter(u => u.id !== id);
+    public async delete(id: string): Promise<void> {
+        await this.repository.delete(id);
     }
 
 }
